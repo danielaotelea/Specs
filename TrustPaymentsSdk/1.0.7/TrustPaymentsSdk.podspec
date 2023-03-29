@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
     s.author             = "daniela"
     s.source       = { :git => "https://github.com/danielaotelea/SDK.git", :tag => "1.0.7" }
     s.vendored_frameworks = "TrustPaymentsSdk.xcframework"
-    s.resource_bundles = {  "TrustPaymentsSdk" => 'trustpaymentsbundle.jsbundle' }
+    s.resource_bundles = {  "TrustPayments" => 'trustpaymentsbundle.jsbundle' }
     # s.library = 'c++'
     # s.xcconfig = {
     #   'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
