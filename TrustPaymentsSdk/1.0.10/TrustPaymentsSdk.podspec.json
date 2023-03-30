@@ -1,0 +1,25 @@
+{
+  "name": "TrustPaymentsSdk",
+  "module_name": "TrustPaymentsSdk",
+  "version": "1.0.10",
+  "summary": "Payment SDK => provide payments methods for ios customers",
+  "license": {
+    "type": "Copyright",
+    "text": "                   package['license']\n"
+  },
+  "authors": "WalleeXXXX",
+  "homepage": "https://github.com/danielaotelea/SDK",
+  "source": {
+    "git": "https://github.com/danielaotelea/SDK.git",
+    "tag": "1.0.10"
+  },
+  "vendored_frameworks": "TrustPaymentsSdk.xcframework",
+  "resource_bundles": {
+    "TrustPayments": "trustpaymentssdkbundle.jsbundle"
+  },
+  "platforms": {
+    "ios": "12.0"
+  },
+  "swift_versions": "4.2",
+  "swift_version": "4.2"
+}
