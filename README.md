@@ -259,7 +259,7 @@ wallee.setCustomTheme(custom: getNewCustomTheme(), baseTheme: .LIGHT)
 
 ### Colors
 
-![Payment method list](sdkDocumentation/imgs/theme-1.jpeg) ![Payment method details](sdkDocumentation/imgs/theme-2.jpeg) ![Pyament method additional details](sdkDocumentation/imgs/theme-3.jpeg)
+![Payment method list](imgs/theme-1.jpeg) ![Payment method details](imgs/theme-2.jpeg) ![Pyament method additional details](imgs/theme-3.jpeg)
 
 ### Default themes
 
