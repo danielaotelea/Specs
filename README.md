@@ -1,6 +1,6 @@
 # Table of contents
 
-- [iOS TrustPaymentsSdk](#wallee-ios-payment-sdk)
+- [iOS WalleePaymentSdk](#wallee-ios-payment-sdk)
     - [API reference](#api-reference)
     - [Installation](#installation)
         - [Requirements](#requirements)
@@ -17,7 +17,7 @@
             - [Light theme](#light-theme)
             - [Dark theme](#dark-theme)
 
-# [ios] TrustPaymentsSdk
+# [ios] WalleePaymentSdk
 
 [ios SDK Release on GitHub](https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk/releases/tag/0.1.0)
 
@@ -25,7 +25,7 @@
 
 | API                                                                           | Type                        | Description                                                    | 
 |-------------------------------------------------------------------------------|-----------------------------|----------------------------------------------------------------|
-| TrustPaymentsResultObserver                                                   | protocol                    | Protocol for handling post-payment events `paymentResult`      |
+| WalleePaymentResultObserver                                                   | protocol                    | Protocol for handling post-payment events `paymentResult`      |
 | `func paymentResult(paymentResultMessage: PaymentResult)`                     | function                    | Result handler for transaction state                           |
 | `func launchPayment(token: String, rootController: UIViewController)`         | function                    | Opening payment dialog (activity)                              |
 | `func setDarkTheme(dark: NSMutableDictionary)`                                | function                    | Can override the whole dark theme or just some specific color. |
@@ -42,14 +42,14 @@
 
 Import the SDK to your app as [Cocoapod](https://cocoapods.org/)
 
-`pod ‘TrustPaymentsSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
+`pod ‘WalleePaymentSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
 
 ```sh
 target 'DemoApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod ‘TrustPaymentsSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
+  pod ‘WalleePaymentSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
   target 'DemoAppTests' do
     inherit! :search_paths
   end
@@ -61,32 +61,32 @@ end
 
 ### Set up Wallee
 
-To use the iOS Payment SDK, you need a [wallee account](https://app-com.trustpayments/user/signup). After signing up, set up
+To use the iOS Payment SDK, you need a [wallee account](https://app-wallee.com/user/signup). After signing up, set up
 your space and enable the payment methods you would like to support.
 
 ### Create transaction
 
 For security reasons, your app cannot create transactions and fetch access tokens. This has to be done on your server by
-talking to the [wallee Web Service API](https://app-com.trustpayments/en-us/doc/api/web-service). You can use one of the
+talking to the [wallee Web Service API](https://app-wallee.com/en-us/doc/api/web-service). You can use one of the
 official SDK libraries to make these calls.
 
 To use the iOS Payment SDK to collect payments, an endpoint needs to be added on your server that creates a transaction
-by calling the [create transaction](https://app-com.trustpayments/doc/api/web-service#transaction-service--create) API
+by calling the [create transaction](https://app-wallee.com/doc/api/web-service#transaction-service--create) API
 endpoint. A transaction holds information about the customer and the line items and tracks charge attempts and the
 payment state.
 
 Once the transaction has been created, your endpoint can fetch an access token by calling
-the [create transaction credentials](https://app-com.trustpayments/doc/api/web-service#transaction-service--create-transaction-credentials)
+the [create transaction credentials](https://app-wallee.com/doc/api/web-service#transaction-service--create-transaction-credentials)
 API endpoint. The access token is returned and passed to the iOS Payment SDK.
 
 ```bash
 # Create a transaction
-curl 'https://app-com.trustpayments/api/transaction/create?spaceId=1' \
+curl 'https://app-wallee.com/api/transaction/create?spaceId=1' \
   -X "POST" \
   -d "{{TRANSACTION_DATA}}"
 
 # Fetch an access token for the created transaction
-curl 'https://app-com.trustpayments/api/transaction/createTransactionCredentials?spaceId={{SPACE_ID}}&id={{TRANSACTION_ID}}' \
+curl 'https://app-wallee.com/api/transaction/createTransactionCredentials?spaceId={{SPACE_ID}}&id={{TRANSACTION_ID}}' \
   -X 'POST'
 ```
 
@@ -95,13 +95,13 @@ curl 'https://app-com.trustpayments/api/transaction/createTransactionCredentials
 Before launching the iOS Payment SDK to collect the payment, your checkout page should show the total amount, the
 products that are being purchased and a checkout button to start the payment process.
 
-Let your checkout activity extend `TrustPaymentsResultObserver`, add the necessary function `paymentResult`.
+Let your checkout activity extend `WalleePaymentResultObserver`, add the necessary function `paymentResult`.
 
 ```swift
 import UIKit
-import TrustPaymentsSdk
+import WalleePaymentSdk
 
-class ViewController : UIViewController, TrustPaymentsResultObserver { 
+class ViewController : UIViewController, WalleePaymentResultObserver { 
 
     func paymentResult(paymentResultMessage: PaymentResult)
     {
@@ -110,21 +110,21 @@ class ViewController : UIViewController, TrustPaymentsResultObserver {
 }
 ```
 
-Initialize the `TrustPaymentsSdk` instance inside `viewDidLoad` of your checkout activity.
+Initialize the `WalleePaymentSdk` instance inside `viewDidLoad` of your checkout activity.
 
 ```swift
 // ...
 import UIKit
-import TrustPaymentsSdk
+import WalleePaymentSdk
 
-class ViewController: UIViewController, TrustPaymentsResultObserver {
+class ViewController: UIViewController, WalleePaymentResultObserver {
     
-    var wallee: TrustPaymentsSdk
+    var walleePaymentSdk: WalleePaymentSdk
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ...
-        wallee = TrustPaymentsSdk(eventObserver: self)
+        walleePaymentSdk = WalleePaymentSdk(eventObserver: self)
     }
     // ...
 }
@@ -136,18 +136,18 @@ token, and launch the payment dialog.
 ```swift
 // ...
 import UIKit
-import TrustPaymentsSdk
+import WalleePaymentSdk
 
-class ViewController : UIViewController, TrustPaymentsResultObserver {
+class ViewController : UIViewController, WalleePaymentResultObserver {
 
     //...
-    var wallee: TrustPaymentsSdk
+    var walleePaymentSdk: WalleePaymentSdk
 
     @IBAction func openSdkClick()
     {
-        wallee = TrustPaymentsSdk(eventObserver: self)
+        walleePaymentSdk = WalleePaymentSdk(eventObserver: self)
         ...
-        wallee.launchPayment(token: _token, rootController: self)
+        walleePaymentSdk.launchPayment(token: _token, rootController: self)
     }
 
     // ...
@@ -172,9 +172,9 @@ The response object contains these properties:
 
 ```swift
 import UIKit
-import TrustPaymentsSdk
+import WalleePaymentSdk
 
-class ViewController: UIViewController, TrustPaymentsResultObserver {
+class ViewController: UIViewController, WalleePaymentResultObserver {
     // ...
     
     @IBOutlet var resultCallbackText: UILabel?
@@ -197,43 +197,44 @@ class ViewController: UIViewController, TrustPaymentsResultObserver {
 As customers could quit the app or lose network connection before the result is handled or malicious clients could
 manipulate the response, it is strongly recommended to set up your server to listen for webhook events the get
 transactions' actual states. Find more information in
-the [webhook documentation](https://app-com.trustpayments/en-us/doc/webhooks).
+the [webhook documentation](https://app-wallee.com/en-us/doc/webhooks).
 
 ## Theming
 
 The appearance of the payment dialog can be customized to match the look and feel of your app. This can be done for both
 the light and dark theme individually.
 
-Colors can be modified by passing a JSON object to the `TrustPaymentsSdk` instance. You can either completely override
+Colors can be modified by passing a JSON object to the `WalleePaymentSdk` instance. You can either completely override
 the theme or only change certain colors.
 
-- `walleePayment.setLightTheme(NSMutableDictionary)` allows to modify the payment dialog's light theme.
-- `walleePayment.setDarkTheme(NSMutableDictionary)` allows to modify the payment dialog's dark theme.
-- `walleePayment.setCustomTheme(NSMutableDictionary|| nil, ThemeEnum)` allows to enforce a specific theme (dark, light
+- `walleePaymentSdk.setLightTheme(NSMutableDictionary)` allows to modify the payment dialog's light theme.
+- `walleePaymentSdk.setDarkTheme(NSMutableDictionary)` allows to modify the payment dialog's dark theme.
+- `walleePaymentSdk.setCustomTheme(NSMutableDictionary|| nil, ThemeEnum)` allows to enforce a specific theme (dark,
+  light
   or your own).
 
 ```swift
 // ...
 import UIKit
-import TrustPaymentsSdk
+import WalleePaymentSdk
 
 
-class ViewController : UIViewController, TrustPaymentsResultObserver {
+class ViewController : UIViewController, WalleePaymentResultObserver {
 
-    let wallee = TrustPaymentsSdk (eventObserver: self)
+    let walleePaymentSdk = WalleePaymentSdk (eventObserver: self)
     
     @IBAction func openSdkClick()
     {
         ....   
-        changeWalleeColorSchema(wallee: wallee)
+        changeColorSchema(wallee: wallee)
         ...
     }
 
 
-    private func changeWalleeColorSchema(wallee: TrustPaymentsSdk)
+    private func changeColorSchema(wallee: WalleePaymentSdk)
     {
 
-        wallee.setLightTheme(light: getLightTheme())
+        walleePaymentSdk.setLightTheme(light: getLightTheme())
     }
 
 }
@@ -242,7 +243,7 @@ class ViewController : UIViewController, TrustPaymentsResultObserver {
 This overrides the colors `colorBackground`, `colorText`, `colorHeadingText` and `colorError` for both the dark and
 light theme.
 
-The `changeWalleeColorSchema` function allows to define the theme to be used by the payment dialog and prevent it from
+The `changeColorSchema` function allows to define the theme to be used by the payment dialog and prevent it from
 switching themes based on the user's settings.
 This way e.g. high-contrast and low-contrast themes can be added. The logic for
 switching between these themes is up to you though.
@@ -250,11 +251,11 @@ switching between these themes is up to you though.
 You can also use `setCustomTheme` to force the usage of the light or dark theme.
 
 ```swift
-wallee.setCustomTheme(custom: getNewCustomTheme(), baseTheme: .DARK)
+walleePaymentSdk.setCustomTheme(custom: getNewCustomTheme(), baseTheme: .DARK)
 ```
 
 ```swift
-wallee.setCustomTheme(custom: getNewCustomTheme(), baseTheme: .LIGHT)
+walleePaymentSdk.setCustomTheme(custom: getNewCustomTheme(), baseTheme: .LIGHT)
 ```
 
 ### Colors
