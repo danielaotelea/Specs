@@ -19,7 +19,7 @@
 
 # [ios] TrustPaymentsSdk
 
-[ios SDK Release on GitHub](https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk/releases/tag/0.1.0)
+[ios SDK Release on GitHub](https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk/releases/tag/2.0.2)
 
 ## API reference
 
@@ -42,14 +42,14 @@
 
 Import the SDK to your app as [Cocoapod](https://cocoapods.org/)
 
-`pod ‘TrustPaymentsSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
+`pod ‘TrustPaymentsSdk’, '2.0.2' :source=> ‘https://github.com/danielaotelea/SDK.git’`
 
 ```sh
 target 'DemoApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod ‘TrustPaymentsSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk.git’`
+  pod ‘TrustPaymentsSdk’, '2.0.2' :source=> ‘https://github.com/danielaotelea/SDK.git’`
   target 'DemoAppTests' do
     inherit! :search_paths
   end
