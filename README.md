@@ -19,7 +19,7 @@
 
 # [ios] WalleePaymentSdk
 
-[ios SDK Release on GitHub](https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk/releases/tag/1.0.0)
+[ios SDK Release on GitHub](https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk/releases/tag/3.0.4)
 
 ## API reference
 
@@ -42,14 +42,14 @@
 
 Import the SDK to your app as [Cocoapod](https://cocoapods.org/)
 
-`pod ‘WalleePaymentSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk-spec.git’`
+`pod ‘WalleePaymentSdk’, '3.0.4' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk-spec.git’`
 
 ```sh
 target 'DemoApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod ‘WalleePaymentSdk’, '1.0.0' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk-spec.git’`
+  pod ‘WalleePaymentSdk’, '3.0.4' :source=> ‘https://github.com/WhiteLabelGithubOwnerName/ios-mobile-sdk-spec.git’`
   target 'DemoAppTests' do
     inherit! :search_paths
   end
